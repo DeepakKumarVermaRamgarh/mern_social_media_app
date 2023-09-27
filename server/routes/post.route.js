@@ -11,12 +11,12 @@ const postRouter = express.Router();
 // route to create new post
 postRouter.post("/create-post", isAuthenticatedUser, createPost);
 // route to delete a post
-postRouter.delete("/delete-post/:id", isAuthenticatedUser, deletePost);
+postRouter.delete("/delete-post/:postId", isAuthenticatedUser, deletePost);
 // route to get all posts
 postRouter.get("/get-all-posts", isAuthenticatedUser, getAllPosts);
 // route to like a post
-postRouter.put("/like-post/:id", isAuthenticatedUser, likePost);
+postRouter.put("/like-post/:postId", isAuthenticatedUser, likePost);
 // route to dislike a post
-postRouter.put("/dislike-post/:id", isAuthenticatedUser, likePost);
+postRouter.put("/dislike-post/:postId", isAuthenticatedUser, likePost);
 
 export default postRouter;

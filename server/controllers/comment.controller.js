@@ -21,7 +21,7 @@ export const createComment = catchAsyncErrors(async (req, res, next) => {
 
   const newComment = {
     comment,
-    commentedBy: req.user._id,
+    user: req.user._id,
   };
 
   post.comments.push(newComment);
@@ -80,7 +80,7 @@ export const replyOnComment = catchAsyncErrors(async (req, res, next) => {
 
   const newReply = {
     reply,
-    repliedBy: req.user._id,
+    user: req.user._id,
   };
 
   comment.replies.push(newReply);

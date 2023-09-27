@@ -12,6 +12,10 @@ import {
   updatePassword,
 } from "../controllers/user.controller.js";
 import { isAuthenticatedUser } from "../middlewares/auth.js";
+import {
+  getCommentsAnalytics,
+  getPostsAnalytics,
+} from "../controllers/analytics.controller.js";
 const userRouter = express.Router();
 
 // route to register
@@ -36,5 +40,14 @@ userRouter.put(
 );
 // route to get all users
 userRouter.get("/all-users", getAllUsers);
+
+// route to get post analytics data
+userRouter.get("/posts-analytics", isAuthenticatedUser, getPostsAnalytics);
+// route to get comments analytics data
+userRouter.get(
+  "/comments-analytics",
+  isAuthenticatedUser,
+  getCommentsAnalytics
+);
 
 export default userRouter;

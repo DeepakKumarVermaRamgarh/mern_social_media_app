@@ -3,6 +3,9 @@ import Post from "../models/post.model.js";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
 import mongoose from "mongoose";
 import ErrorHandler from "../utils/ErrorHandler.js";
+import Comment from "../models/comment.model.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 // function to create post
 export const createPost = catchAsyncErrors(async (req, res, next) => {
@@ -26,10 +29,10 @@ export const createPost = catchAsyncErrors(async (req, res, next) => {
     title,
     description,
     image,
-    postedBy: req.user.id,
+    user: req.user.id,
   });
 
-  res.status(200).json({
+  res.status(201).json({
     success: true,
     message: "Post created successfully",
     post,
@@ -39,9 +42,7 @@ export const createPost = catchAsyncErrors(async (req, res, next) => {
 // function to get all posts
 export const getAllPosts = catchAsyncErrors(async (req, res, next) => {
   // get post with populating user name and comments
-  const posts = await Post.find()
-    .populate("postedBy", "name")
-    .populate("comments");
+  const posts = await Post.find().populate("user", "name").populate("comments");
 
   res.status(200).json({
     success: true,
@@ -147,7 +148,7 @@ export const deletePost = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Invalid post id", 404));
   }
 
-  const post = await Post.findById(postId);
+  const post = await Post.findOneAndDelete({ _id: postId, user: req.user.id });
 
   if (!post) {
     return next(new ErrorHandler("Post not found", 404));
@@ -157,9 +158,14 @@ export const deletePost = catchAsyncErrors(async (req, res, next) => {
     await cloudinary.v2.uploader.destroy(post.image.public_id);
   }
 
-  await post.deleteOne();
+  // console.log("above");
+  // const info = await post.deleteOne({});
+  // console.log("below");
 
-  res.status(200).json({
+  // delete all comments of the post
+  await Comment.deleteMany({ commentedOn: postId });
+
+  return res.status(200).json({
     success: true,
     message: "Post deleted successfully",
   });

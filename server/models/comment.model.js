@@ -10,7 +10,7 @@ const commentSchema = new mongoose.Schema(
       minlength: [3, "Comment must be at least 3 characters"],
       maxlength: [500, "Comment must be less than 500 characters"],
     },
-    commentedBy: {
+    user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
       required: true,
@@ -25,7 +25,7 @@ const commentSchema = new mongoose.Schema(
         reply: {
           type: String,
         },
-        repliedBy: {
+        user: {
           type: mongoose.Schema.ObjectId,
           ref: "User",
         },

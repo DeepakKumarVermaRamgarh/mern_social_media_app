@@ -20,7 +20,7 @@ const postSchema = new mongoose.Schema(
       public_id: String,
       url: String,
     },
-    postedBy: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: [true, "Please provide user"],
