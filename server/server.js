@@ -1,9 +1,18 @@
 // configuring environment variables
 // importing dotenv
 import dotenv from "dotenv";
+import cloudinary from "cloudinary";
 
 // importing path
 dotenv.config();
+
+// configuring cloudinary
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
+});
 
 // configuring app
 import app from "./app.js";
