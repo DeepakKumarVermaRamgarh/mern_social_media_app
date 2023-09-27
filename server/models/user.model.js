@@ -72,6 +72,8 @@ const userSchema = new mongoose.Schema(
         ref: "Post",
       },
     ],
+    resetPasswordToken: String,
+    resetPasswordExpire: String,
   },
   { timestamps: true }
 );
@@ -100,6 +102,23 @@ userSchema.methods.getSignedJwtRefreshToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_REFRESH_TOKEN_SECRET, {
     expiresIn: "7d",
   });
+};
+
+// get reset password token
+userSchema.methods.getResetPasswordToken = function () {
+  const resetToken = jwt.sign(
+    {
+      id: this._id,
+    },
+    process.env.JWT_RESET_PASSWORD_SECRET,
+    {
+      expiresIn: "10m",
+    }
+  );
+  this.resetPasswordToken = resetToken;
+  this.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
 };
 
 // creating user model
