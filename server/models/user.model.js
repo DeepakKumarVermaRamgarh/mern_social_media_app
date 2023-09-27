@@ -44,6 +44,7 @@ const userSchema = new mongoose.Schema(
         },
         message: "Please provide a strong password",
       },
+      select: false,
     },
 
     avatar: {
@@ -88,16 +89,16 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
 };
 
 // sign access token using jwt
-userSchema.methods.getSignedJwtToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_ACCESS_TOKEN, {
-    expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRE,
+userSchema.methods.getSignedJwtAccessToken = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_ACCESS_TOKEN_SECRET, {
+    expiresIn: "5m",
   });
 };
 
 // sign refresh token using jwt
 userSchema.methods.getSignedJwtRefreshToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_REFRESH_TOKEN, {
-    expiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRE,
+  return jwt.sign({ id: this._id }, process.env.JWT_REFRESH_TOKEN_SECRET, {
+    expiresIn: "7d",
   });
 };
 

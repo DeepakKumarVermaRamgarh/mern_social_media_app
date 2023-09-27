@@ -7,6 +7,7 @@ dotenv.config();
 
 // configuring app
 import app from "./app.js";
+import { connectDB } from "./utils/database.js";
 
 // handle unhandled promise rejections
 
@@ -15,6 +16,9 @@ process.on("unhandledRejection", (err) => {
   console.log(`Shutting down the server due to unhandled promise rejection`);
   process.exit(1);
 });
+
+// connect to database
+connectDB();
 
 // starting server
 
