@@ -228,3 +228,12 @@ export const resetPassword = catchAsyncErrors(async (req, res, next) => {
   await user.save();
   sendJWTToken(res, user, 200);
 });
+
+// function to get all users
+export const getAllUsers = catchAsyncErrors(async (req, res, next) => {
+  const users = await User.find();
+  res.status(200).json({
+    success: true,
+    users,
+  });
+});

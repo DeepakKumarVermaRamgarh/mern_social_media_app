@@ -2,6 +2,7 @@
 import express from "express";
 import {
   forgotPassword,
+  getAllUsers,
   getUserDetails,
   loginUser,
   logoutUser,
@@ -33,5 +34,7 @@ userRouter.put(
   isAuthenticatedUser,
   updatePassword
 );
+// route to get all users
+userRouter.get("/all-users", getAllUsers);
 
 export default userRouter;

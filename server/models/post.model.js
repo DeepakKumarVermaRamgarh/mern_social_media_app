@@ -35,6 +35,18 @@ const postSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
+    dislikes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    shares: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,

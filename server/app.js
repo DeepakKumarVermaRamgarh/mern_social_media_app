@@ -3,6 +3,7 @@ import express, { urlencoded } from "express";
 import { errorMiddleWare } from "./middlewares/error.middleware.js";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.route.js";
+import postRouter from "./routes/post.route.js";
 
 // intializing app
 const app = express();
@@ -12,7 +13,7 @@ app.use(express.json({ limit: "50mb" }));
 app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use("/api/v1", userRouter);
+app.use("/api/v1", userRouter, postRouter);
 
 // all other routes
 app.all("*", (req, res, next) => {

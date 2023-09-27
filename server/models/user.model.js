@@ -51,27 +51,6 @@ const userSchema = new mongoose.Schema(
       public_id: String,
       url: String,
     },
-
-    likedPosts: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Post",
-      },
-    ],
-
-    comments: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Comment",
-      },
-    ],
-
-    sharedPosts: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Post",
-      },
-    ],
     resetPasswordToken: String,
     resetPasswordExpire: String,
   },
