@@ -42,7 +42,10 @@ export const createPost = catchAsyncErrors(async (req, res, next) => {
 // function to get all posts
 export const getAllPosts = catchAsyncErrors(async (req, res, next) => {
   // get post with populating user name and comments
-  const posts = await Post.find().populate("user", "name").populate("comments");
+  const posts = await Post.find()
+    .populate("user", "name")
+    .populate("comments")
+    .sort({ createdAt: -1 });
 
   res.status(200).json({
     success: true,
@@ -168,5 +171,17 @@ export const deletePost = catchAsyncErrors(async (req, res, next) => {
   return res.status(200).json({
     success: true,
     message: "Post deleted successfully",
+  });
+});
+
+// function to get my posts
+export const getMyPosts = catchAsyncErrors(async (req, res, next) => {
+  const posts = await Post.find({ user: req.user.id })
+    .populate("comments")
+    .sort({ createdAt: -1 });
+
+  res.status(200).json({
+    success: true,
+    posts,
   });
 });

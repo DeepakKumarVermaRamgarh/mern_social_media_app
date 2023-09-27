@@ -54,7 +54,9 @@ export const getAllComments = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Post not found", 404));
   }
 
-  const comments = await Comment.find({ commentedOn: postId });
+  const comments = await Comment.find({ commentedOn: postId }).sort({
+    createdAt: -1,
+  });
 
   res.status(200).json({
     success: true,

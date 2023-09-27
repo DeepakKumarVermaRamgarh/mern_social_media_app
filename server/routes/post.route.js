@@ -3,6 +3,7 @@ import {
   createPost,
   deletePost,
   getAllPosts,
+  getMyPosts,
   likePost,
 } from "../controllers/post.controller.js";
 import { isAuthenticatedUser } from "../middlewares/auth.js";
@@ -18,5 +19,7 @@ postRouter.get("/get-all-posts", isAuthenticatedUser, getAllPosts);
 postRouter.put("/like-post/:postId", isAuthenticatedUser, likePost);
 // route to dislike a post
 postRouter.put("/dislike-post/:postId", isAuthenticatedUser, likePost);
+// route to get my posts
+postRouter.get("/my-posts", isAuthenticatedUser, getMyPosts);
 
 export default postRouter;
