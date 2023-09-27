@@ -38,7 +38,10 @@ export const createPost = catchAsyncErrors(async (req, res, next) => {
 
 // function to get all posts
 export const getAllPosts = catchAsyncErrors(async (req, res, next) => {
-  const posts = await Post.find().populate("postedBy", "name");
+  // get post with populating user name and comments
+  const posts = await Post.find()
+    .populate("postedBy", "name")
+    .populate("comments");
 
   res.status(200).json({
     success: true,
@@ -108,7 +111,7 @@ export const dislikePost = catchAsyncErrors(async (req, res, next) => {
 
 // function to share a post
 export const sharePost = catchAsyncErrors(async (req, res, next) => {
-    const { postId } = req.params;
+  const { postId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(postId)) {
     return next(new ErrorHandler("Invalid post id", 404));
@@ -134,8 +137,7 @@ export const sharePost = catchAsyncErrors(async (req, res, next) => {
     success: true,
     message: "Post shared successfully",
   });
-})
-
+});
 
 // function to delete a post
 export const deletePost = catchAsyncErrors(async (req, res, next) => {
